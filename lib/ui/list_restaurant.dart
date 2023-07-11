@@ -29,8 +29,8 @@ class _ListRestaurantState extends State<ListRestaurant> {
   @override
   void initState() {
     super.initState();
-    _notificationHelper
-        .configureSelectNotificationSubject(RestaurantDetailPage.routeName);
+    _notificationHelper.configureSelectNotificationSubject(
+        context, RestaurantDetailPage.routeName);
   }
 
   @override

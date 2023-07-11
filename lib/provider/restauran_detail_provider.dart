@@ -9,14 +9,16 @@ import '../common/result_state.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;
-  final String id;
 
-  RestaurantDetailProvider({required this.apiService, required this.id}) {
-    _fechtDetailrestaurant(id);
-  }
+  RestaurantDetailProvider({required this.apiService});
+
   String _message = "";
   late RestaurantDetail _detailRestaurant;
   late ResultState _state;
+
+  void fecthRestauran(String id) {
+    _fechtDetailrestaurant(id);
+  }
 
   String get message => _message;
 

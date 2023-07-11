@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:project_1/data/api/api_service.dart';
 import 'package:project_1/data/model/restaurant_elemen.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../common/navigation.dart';
+import '../provider/restauran_detail_provider.dart';
 
 final selectNotificationSubject = BehaviorSubject<String>();
 
@@ -76,11 +78,13 @@ class NotificationHelper {
         payload: json.encode(randomRestaurant.toJson()));
   }
 
-  void configureSelectNotificationSubject(String route) {
+  void configureSelectNotificationSubject(BuildContext context, String route) {
     selectNotificationSubject.stream.listen(
       (String payload) async {
         var data = RestaurantElement.fromJson(json.decode(payload));
-
+        final provider =
+            Provider.of<RestaurantDetailProvider>(context, listen: false);
+        provider.fecthRestauran(data.id);
         Navigation.intentWithData(route, data);
       },
     );

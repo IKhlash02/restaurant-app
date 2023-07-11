@@ -20,12 +20,11 @@ class CardListRestaurant extends StatelessWidget {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              return ChangeNotifierProvider(
-                create: (context) => RestaurantDetailProvider(
-                    apiService: ApiService(), id: restaurantData.id),
-                child: RestaurantDetailPage(
-                  restaurantElement: restaurantData,
-                ),
+              final provider =
+                  Provider.of<RestaurantDetailProvider>(context, listen: false);
+              provider.fecthRestauran(restaurantData.id);
+              return RestaurantDetailPage(
+                restaurantElement: restaurantData,
               );
             },
           ));
@@ -40,6 +39,15 @@ class CardListRestaurant extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     "${ApiService.imageSmall}${restaurantData.pictureId}",
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Image.asset(
+                        "assets/placeholder-480.png",
+                        height: MediaQuery.of(context).size.height / 6,
+                        width: MediaQuery.of(context).size.width / 3,
+                        fit: BoxFit.cover,
+                      );
+                    },
                     height: MediaQuery.of(context).size.height / 6,
                     width: MediaQuery.of(context).size.width / 3,
                     fit: BoxFit.cover,

@@ -7,6 +7,7 @@ import 'package:project_1/data/db/database_helper.dart';
 import 'package:project_1/data/model/restaurant_elemen.dart';
 import 'package:project_1/provider/database_provider.dart';
 import 'package:project_1/provider/list_restaurant_provider.dart';
+import 'package:project_1/provider/restauran_detail_provider.dart';
 import 'package:project_1/provider/scheduling_provider.dart';
 import 'package:project_1/ui/detail_restaurant.dart';
 import 'package:project_1/ui/list_restaurant.dart';
@@ -50,6 +51,11 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SchedulingProvider>(
           create: (_) => SchedulingProvider(),
+        ),
+        ChangeNotifierProvider<RestaurantDetailProvider>(
+          create: (context) => RestaurantDetailProvider(
+            apiService: ApiService(),
+          ),
         )
       ],
       child: MaterialApp(

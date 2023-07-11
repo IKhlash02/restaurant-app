@@ -34,9 +34,10 @@ class SchedulingProvider extends ChangeNotifier {
       debugPrint('Scheduling Restaurant Activated');
 
       notifyListeners();
+
       debugPrint('Before AndroidAlarmManager.periodic');
       final result = await AndroidAlarmManager.periodic(
-        const Duration(minutes: 1),
+        const Duration(days: 1),
         1,
         BackgroundService.callback,
         startAt: DateTimeHelper.format(),
