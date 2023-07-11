@@ -5,6 +5,7 @@ import 'package:project_1/data/model/restaurant_elemen.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/cutomer_review.dart';
+import '../model/result_list_restaurant.dart';
 
 class ApiService {
   static const _baseUrl = "https://restaurant-api.dicoding.dev";
@@ -14,6 +15,25 @@ class ApiService {
   static const _addReview = "/review";
   static const imageSmall = "https://restaurant-api.dicoding.dev/images/small/";
   static const imageLarge = "https://restaurant-api.dicoding.dev/images/large/";
+
+  Future<ResultListRestauran> resultListRestaurant(http.Client client) async {
+    final response = await client.get(Uri.parse("$_baseUrl$_listRestaurant"));
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+
+      if (json["message"] == "success") {
+        ResultListRestauran restaurant =
+            ResultListRestauran.fromRawJson(response.body);
+
+        return restaurant;
+      } else {
+        throw Exception("List Restaurant not succes");
+      }
+    } else {
+      throw Exception("Failed to load List Restaurant");
+    }
+  }
 
   Future<List<RestaurantElement>> listRestaurant() async {
     final response = await http.get(Uri.parse("$_baseUrl$_listRestaurant"));
