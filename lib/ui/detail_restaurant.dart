@@ -15,7 +15,7 @@ import '../widget/box_list.dart';
 import '../widget/review_item.dart';
 import 'detail_review.dart';
 
-class RestaurantDetailPage extends StatelessWidget {
+class RestaurantDetailPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
   final RestaurantElement restaurantElement;
@@ -24,10 +24,24 @@ class RestaurantDetailPage extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<RestaurantDetailPage> createState() => _RestaurantDetailPageState();
+}
+
+class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      Provider.of<RestaurantDetailProvider>(context, listen: false)
+          .fecthRestauran(widget.restaurantElement.id);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(restaurantElement.name),
+        title: Text(widget.restaurantElement.name),
       ),
       body: SingleChildScrollView(
         child: Consumer<RestaurantDetailProvider>(builder: (context, state, _) {
@@ -41,7 +55,7 @@ class RestaurantDetailPage extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     Hero(
-                      tag: restaurantElement.name,
+                      tag: widget.restaurantElement.name,
                       child: Image.network(
                         "${ApiService.imageLarge}${state.result.pictureId}",
                         width: double.infinity,
@@ -54,7 +68,8 @@ class RestaurantDetailPage extends StatelessWidget {
                       child: Consumer<DatabaseProvider>(
                           builder: (context, state, _) {
                         return FutureBuilder<bool>(
-                            future: state.isBookmarked(restaurantElement.id),
+                            future:
+                                state.isBookmarked(widget.restaurantElement.id),
                             builder: (context, snapshot) {
                               var isBookmarked = snapshot.data ?? false;
                               return InkWell(
@@ -63,11 +78,12 @@ class RestaurantDetailPage extends StatelessWidget {
                                   if (isBookmarked) {
                                     Provider.of<DatabaseProvider>(context,
                                             listen: false)
-                                        .removeBookmark(restaurantElement.id);
+                                        .removeBookmark(
+                                            widget.restaurantElement.id);
                                   } else {
                                     Provider.of<DatabaseProvider>(context,
                                             listen: false)
-                                        .addBookmark(restaurantElement);
+                                        .addBookmark(widget.restaurantElement);
                                   }
                                 },
                                 child: Container(

@@ -10,8 +10,10 @@ class AddReviewProvider extends ChangeNotifier {
   Future addReview(String review) async {
     try {
       await apiService.addCustomerReview(id, "Ikhlash", review);
-      notifyListeners();
-    } catch (e) {
+      debugPrint("review succes");
+    } catch (e, s) {
+      debugPrint(s.toString());
+      debugPrint(e.toString());
       throw Exception("Add review failed");
     }
   }

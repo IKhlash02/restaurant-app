@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:project_1/data/api/api_service.dart';
-import 'package:provider/provider.dart';
 
 import '../data/model/restaurant_elemen.dart';
-import '../provider/restauran_detail_provider.dart';
+
 import '../ui/detail_restaurant.dart';
 
 class CardListRestaurant extends StatelessWidget {
@@ -17,12 +16,9 @@ class CardListRestaurant extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) {
-              final provider =
-                  Provider.of<RestaurantDetailProvider>(context, listen: false);
-              provider.fecthRestauran(restaurantData.id);
               return RestaurantDetailPage(
                 restaurantElement: restaurantData,
               );

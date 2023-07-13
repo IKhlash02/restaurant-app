@@ -150,8 +150,9 @@ class _AddReviewPageState extends State<AddReviewPage> {
                   SubmitButton(
                       text: "Add Review",
                       onPressed: () {
+                        final review = _addReviewController.text;
                         Provider.of<AddReviewProvider>(context, listen: false)
-                            .addReview(_addReviewController.text);
+                            .addReview(review);
 
                         Navigator.pop(context);
                       })

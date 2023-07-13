@@ -10,7 +10,9 @@ import '../common/result_state.dart';
 class RestaurantDetailProvider extends ChangeNotifier {
   final ApiService apiService;
 
-  RestaurantDetailProvider({required this.apiService});
+  RestaurantDetailProvider({required this.apiService}) {
+    _fechtDetailrestaurant("rqdv5juczeskfw1e867");
+  }
 
   String _message = "";
   late RestaurantDetail _detailRestaurant;
